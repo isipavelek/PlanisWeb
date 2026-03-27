@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlanisWeb - Control de Planificaciones</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js para los contadores (opcional si usamos tarjetas estáticas, pero agreguémoslo por si acaso) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SheetJS (xlsx) -->
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <!-- Axios para facilitar recolección desde URL -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <!-- Pantalla de Login -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1 class="login-logo">PlanisWeb</h1>
+            <p class="login-subtitle">Gestión Académica de Planificaciones</p>
+            
+            <div id="login-error" class="hidden error-text"></div>
+            
+            <div class="login-form">
+                <div class="login-group">
+                    <label>👤 Seleccioná tu Usuario</label>
+                    <select id="user-select" class="login-input">
+                        <option value="Isi">Isi</option>
+                        <option value="Ale">Ale</option>
+                        <option value="Luis">Luis</option>
+                    </select>
+                </div>
+                
+                <div class="login-group">
+                    <label>🔒 Contraseña</label>
+                    <input type="password" id="user-password" placeholder="••••••••" class="login-input">
+                </div>
+                
+                <button id="btn-login" class="btn btn-login-main">Entrar al Sistema</button>
+            </div>
+            
+            <div class="login-footer">© 2026 ETRR - Planis Project</div>
+        </div>
+    </div>
+
+    <!-- Dashboard Principal -->
+    <div id="app-screen" class="screen hidden">
+        <div class="sidebar" id="sidebar">
+            <h3 class="app-title">PlanisWeb 2026</h3>
+            <div class="sidebar-section">
+                <h4>Carga de Archivos</h4>
+                <button id="btn-local-file" class="btn btn-orange" style="width: 100%; margin-bottom: 10px;" onclick="document.getElementById('file-upload').click()">📂 Cargar Planificaciones (Excel)</button>
+                <input type="file" id="file-upload" accept=".xlsx, .xls" style="display: none;">
+                
+                <button id="btn-process" class="btn btn-green">🔄 Cruzar con Base de Datos</button>
+            </div>
+            
+            <div class="sidebar-section">
+                <h4>Filtros</h4>
+                <label class="checkbox-label"><input type="checkbox" id="chk-lista" checked> Listas (Verde)</label>
+                <label class="checkbox-label"><input type="checkbox" id="chk-faltarev" checked> Falta Rev (Amarillo)</label>
+                <label class="checkbox-label"><input type="checkbox" id="chk-noentregada" checked> No Entreg. (Rojo)</label>
+                
+                <input type="text" id="search-docente" placeholder="Buscar docente..." class="input-block mt-2">
+                
+                <label class="select-label">Coordinador:
+                    <select id="filter-coord" class="input-block">
+                        <option value="Todos">Todos</option>
+                        <option value="Isi">Isi</option>
+                        <option value="Ale">Ale</option>
+                        <option value="Sin Asignar">Sin Asignar</option>
+                    </select>
+                </label>
+                
+                <label class="select-label">Año:
+                    <select id="filter-anio" class="input-block"><option value="Todos">Todos</option></select>
+                </label>
+                
+                <label class="select-label">Área:
+                    <select id="filter-area" class="input-block"><option value="Todas">Todas</option></select>
+                </label>
+            </div>
+            
+            <button id="btn-logout" class="btn btn-danger mt-auto">Cerrar Sesión</button>
+        </div>
+
+        <div class="main-content">
+            <button id="btn-toggle-sidebar" class="btn btn-dark btn-sm toggle-btn">⬅ Ocultar Menú Lateral</button>
+            
+            <!-- Contadores -->
+            <div class="counters-container">
+                <div class="counter-card card-green">
+                    <span class="counter-val" id="count-lista">0</span>
+                    <span class="counter-label">Listas (Verde)</span>
+                </div>
+                <div class="counter-card card-yellow">
+                    <span class="counter-val" id="count-faltarev">0</span>
+                    <span class="counter-label">Falta Rev (Amarillo)</span>
+                </div>
+                <div class="counter-card card-red">
+                    <span class="counter-val" id="count-noentregada">0</span>
+                    <span class="counter-label">No Entreg. (Rojo)</span>
+                </div>
+            </div>
+
+            <!-- Selector de Vista -->
+            <div class="view-selector">
+                <strong>Vista Actual:</strong>
+                <button class="view-tab active" data-view="materias">Materias</button>
+                <button class="view-tab" data-view="docentes">Docentes</button>
+                <button class="view-tab" data-view="visor">Visor</button>
+                <button class="view-tab" data-view="analiticas">Analíticas</button>
+            </div>
+
+            <!-- Vistas -->
+            <div class="views-container">
+                <!-- Vista Materias -->
+                <div id="view-materias" class="view-panel active">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2>Gestión de Materias</h2>
+                        <button class="btn btn-green" id="btn-open-new-materia">➕ Nueva Materia</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('materias', 'Materia')" style="cursor:pointer">Materia ⇅</th>
+                                <th onclick="sortTable('materias', 'Docente')" style="cursor:pointer">Docente ⇅</th>
+                                <th onclick="sortTable('materias', 'Estado')" style="cursor:pointer">Estado ⇅</th>
+                                <th style="width: 100px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-materias">
+                            <!-- Filas dinámicas -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vista Analíticas -->
+                <div id="view-analiticas" class="view-panel hidden" style="flex-direction:column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="color:var(--color-primary);">📈 Analíticas de Auditoría</h2>
+                        <button class="btn btn-sm btn-dark" style="width:auto;" onclick="renderAnaliticasAuditoria()">🔄 Actualizar Datos</button>
+                    </div>
+                    
+                    <div id="analiticas-metrics" class="info-grid">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+
+                    <div id="analiticas-charts" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:20px; margin-top:30px;">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Vista Docentes -->
+                <div id="view-docentes" class="view-panel hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2>Gestión de Docentes</h2>
+                        <button class="btn btn-green" id="btn-open-new-docente">➕ Nuevo Docente</button>
+                    </div>
+                    <div class="actions-bar mb-2">
+                        <button class="btn btn-primary btn-sm">📧 Enviar Email al Docente</button>
+                        <button class="btn btn-whatsapp btn-sm">📋 Copiar Mensaje (WhatsApp)</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('docentes', 'Docente')" style="cursor:pointer">Docente ⇅</th>
+                                <th onclick="sortTable('docentes', 'ver')" style="text-align:center; cursor:pointer">Listas ⇅</th>
+                                <th onclick="sortTable('docentes', 'ama')" style="text-align:center; cursor:pointer">Falta Rev. ⇅</th>
+                                <th onclick="sortTable('docentes', 'roj')" style="text-align:center; cursor:pointer">No Entreg. ⇅</th>
+                                <th style="width: 100px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-docentes">
+                            <!-- Filas dinámicas -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Vista Visor -->
+                <div id="view-visor" class="view-panel hidden visor-layout">
+                    <div class="visor-header">
+                        <button id="btn-toggle-visor-list" class="btn btn-dark btn-sm">⬅ Ocultar Lista</button>
+                    </div>
+                    <div class="visor-body">
+                        <div id="visor-sidebar" class="visor-sidebar">
+                            <div id="visor-list" class="visor-list">
+                                <!-- Botones de materias -->
+                            </div>
+                        </div>
+                        <div id="visor-detail" style="flex:1; padding:24px; overflow-y:auto; background:var(--bg-card);">
+                    <!-- Detalle de la materia -->
+                    <div style="text-align:center; padding-top:100px; color:var(--text-muted);">
+                        <div style="font-size:48px; margin-bottom:20px; opacity:0.5;">📖</div>
+                        <h3>Seleccioná una materia para ver su planificación</h3>
+                    </div>
+                </div>
+
+                <!-- NUEVO: Sidebar de Evaluación Derecho -->
+                <div id="visor-eval-sidebar" class="collapsed">
+                    <div id="visor-eval-content">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Materia -->
+    <div id="modal-materia" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-materia-title">Nueva Materia</h3>
+            <input type="hidden" id="edit-materia-id">
+            
+            <div class="form-group">
+                <label>Nombre de la Materia:</label>
+                <input type="text" id="input-materia-nombre" class="input-block" placeholder="Ej: Matemática I">
+            </div>
+            
+            <div class="form-group">
+                <label>Docente Asignado:</label>
+                <select id="select-materia-docente" class="input-block">
+                    <option value="">-- Sin Asignar --</option>
+                </select>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-dark" onclick="closeModal('modal-materia')">Cancelar</button>
+                <button class="btn btn-green" id="btn-save-materia">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Docente -->
+    <div id="modal-docente" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-docente-title">Nuevo Docente</h3>
+            <input type="hidden" id="edit-docente-id">
+            
+            <div class="form-group">
+                <label>Nombre Completo:</label>
+                <input type="text" id="input-docente-nombre" class="input-block" placeholder="Ej: Juan Pérez">
+            </div>
+
+            <div class="form-group">
+                <label>Coordinador:</label>
+                <select id="input-docente-coordinador" class="input-block">
+                    <option value="">Sin Asignar</option>
+                    <option value="Ale">Ale</option>
+                    <option value="Isi">Isi</option>
+                </select>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn btn-dark" onclick="closeModal('modal-docente')">Cancelar</button>
+                <button class="btn btn-green" id="btn-save-docente">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Resumen IA -->
+    <div id="modal-ai" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 600px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <div class="modal-ai-icon" style="font-size: 24px;">✨</div>
+                <h2 style="margin: 0; background: linear-gradient(90deg, #facc15, #ff8c00); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Resumen Inteligente</h2>
+            </div>
+            
+            <div id="ai-loading" style="display: none; text-align: center; padding: 40px;">
+                <div class="loading-spinner" style="margin: 0 auto 15px;"></div>
+                <p style="color: var(--text-muted); font-style: italic;">Analizando contenido pedagógico...</p>
+            </div>
+
+            <div id="modal-ai-content" style="max-height: 400px; overflow-y: auto; line-height: 1.6;">
+                <!-- El contenido se genera dinámicamente -->
+            </div>
+
+            <div class="modal-actions" style="margin-top:25px; border-top: 1px solid #444; padding-top: 15px;">
+                <button class="btn btn-primary" onclick="window.closeModal('modal-ai')" style="width:100%;">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalle de Rúbrica -->
+    <div id="modal-rubrica" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 600px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div class="modal-ai-icon" style="font-size: 24px;">📊</div>
+                <h2 id="modal-rubrica-title" style="margin: 0; color: var(--color-primary); font-size: 20px;">Rúbrica de Evaluación</h2>
+            </div>
+            
+            <div id="modal-rubrica-content" style="max-height: 450px; overflow-y: auto;">
+                <!-- El contenido se genera dinámicamente -->
+            </div>
+
+            <div class="modal-actions" style="margin-top:25px; border-top: 1px solid #444; padding-top: 15px;">
+                <button class="btn btn-primary" onclick="window.closeModal('modal-rubrica')" style="width:100%;">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (via CDN) -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

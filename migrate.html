@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Migrar Datos Planis a Firebase</title>
+    <!-- Usamos Firebase Compat SDK para que funcione directo desde el archivo (file://) sin errores de CORS de Módulos -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 50px; background: #1e1e1e; color: white; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; background: #2b2b2b; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .btn { padding: 12px 24px; font-size: 16px; cursor: pointer; border: none; border-radius: 6px; background: #1f538d; color: white; font-weight: bold; transition: opacity 0.2s; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; background: #555; }
+        .btn:hover:not(:disabled) { background: #14375e; }
+        input[type="file"] { margin: 20px 0; display: block; background: #333; padding: 10px; width: 100%; border-radius: 4px; color: white; }
+        #status { margin-top: 20px; padding: 15px; border-radius: 4px; background: #333; min-height: 20px; font-size: 14px; }
+        .error { color: #f87171; border-left: 4px solid #f87171; background: #422 !important; }
+        .success { color: #4ade80; border-left: 4px solid #4ade80; background: #242 !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🚀 Migrator Planis (v2.1)</h2>
+        <p>Esta herramienta subirá tus datos de SQLite a la nube de Firebase.</p>
+        <p>1. Seleccioná el archivo <b>planis_data_export.json</b>:</p>
+        
+        <input type="file" id="fileJson" accept=".json">
+        
+        <button id="btn-migrar" class="btn">Iniciar Migración</button>
+        
+        <div id="status">Esperando selección de archivo...</div>
+    </div>
+
+    <script>
+        // Configuración de tu proyecto
+        const firebaseConfig = {
+            projectId: "planisweb-ipave",
+            apiKey: "AIzaSyALyf_MKKaPxLLEYPnCEx24OK4phEWzAVc",
+            authDomain: "planisweb-ipave.firebaseapp.com",
+            storageBucket: "planisweb-ipave.firebasestorage.app",
+            messagingSenderId: "210839028220",
+            appId: "1:210839028220:web:6a99f2a2af358d2c59b279"
+        };
+
+        // Inicializar Firebase (Modo Compat)
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const btn = document.getElementById('btn-migrar');
+        const status = document.getElementById('status');
+        const fileInput = document.getElementById('fileJson');
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                status.innerText = `📂 Archivo "${file.name}" cargado. ¡Ya podés migrar!`;
+                status.className = "success";
+            }
+        });
+
+        btn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                status.innerText = "❌ No seleccionaste ningún archivo.";
+                status.className = "error";
+                return;
+            }
+
+            status.innerText = "⏳ Procesando y subiendo datos...";
+            status.className = "";
+            btn.disabled = true;
+
+            const reader = new FileReader();
+            reader.onload = async (evt) => {
+                try {
+                    const data = JSON.parse(evt.target.result);
+                    
+                    // Docentes
+                    let countDoc = 0;
+                    for(let d of data.docentes) {
+                        await db.collection("docentes").doc(String(d.id)).set({ 
+                            Docente: d.nombre, 
+                            email: d.email || "", 
+                            coordinador: d.coordinador || "" 
+                        });
+                        countDoc++;
+                    }
+                    
+                    // Materias
+                    let countMat = 0;
+                    for(let m of data.materias) {
+                        await db.collection("materias").doc(String(m.id)).set({ 
+                            Materia: m.nombre, 
+                            docentes_ids: (m.docentes_ids || []).map(String) 
+                        });
+                        countMat++;
+                    }
+                    
+                    // Config
+                    for(let c of data.config) {
+                        await db.collection("config").doc(c.clave).set({ valor: c.valor });
+                    }
+
+                    status.innerHTML = `✅ <b>¡MIGRACIÓN COMPLETA!</b><br>Subidos ${countDoc} docentes y ${countMat} materias a Firebase.<br>Ya podés cerrar esto y abrir <b>index.html</b>.`;
+                    status.className = "success";
+                } catch(err) { 
+                    status.innerText = "❌ Error de Firebase: " + err.message;
+                    status.className = "error";
+                    btn.disabled = false;
+                }
+            };
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+</html>

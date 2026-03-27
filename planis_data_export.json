@@ -1,0 +1,894 @@
+{
+    "materias": [
+        {
+            "id": 1,
+            "nombre": "AEA4 - Aplicaciones de Electrónica Analógica",
+            "docentes_ids": [
+                1
+            ]
+        },
+        {
+            "id": 2,
+            "nombre": "AEA5 - Aplicaciones de Electrónica Analógica",
+            "docentes_ids": [
+                2
+            ]
+        },
+        {
+            "id": 3,
+            "nombre": "AEA6 - Aplicaciones de Electrónica Analógica",
+            "docentes_ids": [
+                3
+            ]
+        },
+        {
+            "id": 4,
+            "nombre": "AED4 - Aplicaciones de Electrónica Digital",
+            "docentes_ids": [
+                1,
+                4
+            ]
+        },
+        {
+            "id": 5,
+            "nombre": "AED5 - Aplicaciones de Electrónica Digital",
+            "docentes_ids": [
+                1,
+                4
+            ]
+        },
+        {
+            "id": 6,
+            "nombre": "AED6 - Aplicaciones de Electrónica Digital",
+            "docentes_ids": [
+                1,
+                4
+            ]
+        },
+        {
+            "id": 7,
+            "nombre": "AUT3- Automación",
+            "docentes_ids": [
+                5
+            ]
+        },
+        {
+            "id": 8,
+            "nombre": "AUT4 - Automación",
+            "docentes_ids": [
+                6
+            ]
+        },
+        {
+            "id": 9,
+            "nombre": "CE4- Circuitos Eléctricos",
+            "docentes_ids": [
+                7,
+                8
+            ]
+        },
+        {
+            "id": 10,
+            "nombre": "CE5- Circuitos Eléctricos",
+            "docentes_ids": [
+                9
+            ]
+        },
+        {
+            "id": 11,
+            "nombre": "DASE - Diseño Asistido y Simulación Electrónica",
+            "docentes_ids": [
+                10
+            ]
+        },
+        {
+            "id": 12,
+            "nombre": "DITEC4 - Dibujo Tecnológico",
+            "docentes_ids": [
+                11
+            ]
+        },
+        {
+            "id": 13,
+            "nombre": "DPM4-2E - CNC 2 Ejes",
+            "docentes_ids": [
+                12
+            ]
+        },
+        {
+            "id": 14,
+            "nombre": "DPM4-3E - CNC 3 Ejes",
+            "docentes_ids": [
+                13
+            ]
+        },
+        {
+            "id": 15,
+            "nombre": "DPM4-FM - Taller – Fresadora Básica",
+            "docentes_ids": [
+                11
+            ]
+        },
+        {
+            "id": 16,
+            "nombre": "DPM4-TM - Taller – Tornería Básica",
+            "docentes_ids": [
+                14
+            ]
+        },
+        {
+            "id": 17,
+            "nombre": "DPM5-2E - CNC 2 Ejes",
+            "docentes_ids": [
+                15
+            ]
+        },
+        {
+            "id": 18,
+            "nombre": "DPM5-3E - CNC 3 Ejes",
+            "docentes_ids": [
+                13
+            ]
+        },
+        {
+            "id": 19,
+            "nombre": "DPM5-FM - Taller – Fresadora Básica",
+            "docentes_ids": [
+                11
+            ]
+        },
+        {
+            "id": 20,
+            "nombre": "DPM5-TM - Taller – Tornería Básica",
+            "docentes_ids": [
+                16
+            ]
+        },
+        {
+            "id": 21,
+            "nombre": "DPM6-3D - Diseño y procesamiento mecánico impresión 3D",
+            "docentes_ids": [
+                16
+            ]
+        },
+        {
+            "id": 22,
+            "nombre": "DPM6-3E - Diseño y procesamiento mecánico CNC 3E",
+            "docentes_ids": [
+                13
+            ]
+        },
+        {
+            "id": 23,
+            "nombre": "DPM6-CC - Diseño y procesamiento mecánico Cadena Cinemática",
+            "docentes_ids": [
+                11
+            ]
+        },
+        {
+            "id": 24,
+            "nombre": "EA7 - Electrónica Aplicada",
+            "docentes_ids": [
+                2
+            ]
+        },
+        {
+            "id": 25,
+            "nombre": "EI7 - Electrónica Industrial",
+            "docentes_ids": [
+                9
+            ]
+        },
+        {
+            "id": 26,
+            "nombre": "ELG- Electrónica Gral",
+            "docentes_ids": [
+                5
+            ]
+        },
+        {
+            "id": 27,
+            "nombre": "EMG- Electromecánica Gral",
+            "docentes_ids": [
+                17
+            ]
+        },
+        {
+            "id": 28,
+            "nombre": "EPYDL6 - Emprendimiento Productivo y Desarrollo Local",
+            "docentes_ids": [
+                3
+            ]
+        },
+        {
+            "id": 29,
+            "nombre": "GR7- Grippers Robóticos",
+            "docentes_ids": [
+                4,
+                18
+            ]
+        },
+        {
+            "id": 30,
+            "nombre": "IA7 - Inteligencia Artificial",
+            "docentes_ids": [
+                2
+            ]
+        },
+        {
+            "id": 31,
+            "nombre": "IAE4 - Instalaciones y Aplicaciones de la Energía",
+            "docentes_ids": [
+                15,
+                19
+            ]
+        },
+        {
+            "id": 32,
+            "nombre": "IAE5 - Instalaciones y Aplicaciones de la Energía",
+            "docentes_ids": [
+                19,
+                20
+            ]
+        },
+        {
+            "id": 33,
+            "nombre": "IAE6-GD - Instalaciones y aplicación de la energía IAE Generación Transmisión y Distribución de la Energía Eléctrica",
+            "docentes_ids": [
+                7
+            ]
+        },
+        {
+            "id": 34,
+            "nombre": "IAE6-LT - Instalaciones y Aplicaciones de la Energía: Luminotecnia",
+            "docentes_ids": [
+                21
+            ]
+        },
+        {
+            "id": 35,
+            "nombre": "IAE6-MO - Motores de Combustión Interna",
+            "docentes_ids": []
+        },
+        {
+            "id": 36,
+            "nombre": "II7 - Instalaciones Industriales",
+            "docentes_ids": [
+                22
+            ]
+        },
+        {
+            "id": 37,
+            "nombre": "IME6 - Instalaciones y Máquinas Eléctricas",
+            "docentes_ids": [
+                19
+            ]
+        },
+        {
+            "id": 38,
+            "nombre": "LE5 - Lenguajes Electrónicos",
+            "docentes_ids": [
+                10
+            ]
+        },
+        {
+            "id": 39,
+            "nombre": "LE6 - Lenguajes Electrónicos",
+            "docentes_ids": [
+                3
+            ]
+        },
+        {
+            "id": 40,
+            "nombre": "LME6 - Laboratorio Mediciones Eléctricas",
+            "docentes_ids": [
+                9,
+                15
+            ]
+        },
+        {
+            "id": 41,
+            "nombre": "LMyCC7 - LABORATORIO DE METROLOGIA Y CONTROL DE CALIDAD",
+            "docentes_ids": [
+                23
+            ]
+        },
+        {
+            "id": 42,
+            "nombre": "LT1 - Lenguajes Tecnológicos",
+            "docentes_ids": [
+                24,
+                25
+            ]
+        },
+        {
+            "id": 43,
+            "nombre": "LT2- Lenguajes Tecnológicos",
+            "docentes_ids": [
+                24,
+                26
+            ]
+        },
+        {
+            "id": 44,
+            "nombre": "LT3 -Lenguajes Tecnológicos",
+            "docentes_ids": [
+                27
+            ]
+        },
+        {
+            "id": 45,
+            "nombre": "ME7- Maquinas Eléctricas",
+            "docentes_ids": [
+                28
+            ]
+        },
+        {
+            "id": 46,
+            "nombre": "MEyA4 - MAQUINAS ELECTRICAS Y AUTOMATISMOS",
+            "docentes_ids": [
+                19,
+                20
+            ]
+        },
+        {
+            "id": 47,
+            "nombre": "MEyA5- ME- Maquinas Eléctricas",
+            "docentes_ids": [
+                11
+            ]
+        },
+        {
+            "id": 48,
+            "nombre": "MEyA5- RI- Robotica Industrial",
+            "docentes_ids": [
+                8,
+                29
+            ]
+        },
+        {
+            "id": 49,
+            "nombre": "MEyA6 - Maquinas Eléctricas y Automatismos",
+            "docentes_ids": [
+                5
+            ]
+        },
+        {
+            "id": 50,
+            "nombre": "MNTE7 - Mantenimiento electrónico",
+            "docentes_ids": [
+                3
+            ]
+        },
+        {
+            "id": 51,
+            "nombre": "MPE4 - Montaje de Proyectos Electrónicos",
+            "docentes_ids": [
+                2,
+                31
+            ]
+        },
+        {
+            "id": 52,
+            "nombre": "MPE5 - Montaje de Proyectos Electrónicos",
+            "docentes_ids": [
+                3,
+                5
+            ]
+        },
+        {
+            "id": 53,
+            "nombre": "MPE6 - Montaje de Proyectos Electrónicos",
+            "docentes_ids": [
+                3,
+                5
+            ]
+        },
+        {
+            "id": 54,
+            "nombre": "MyM5 - Mecánica y Mecanismos",
+            "docentes_ids": [
+                16,
+                32
+            ]
+        },
+        {
+            "id": 55,
+            "nombre": "MyME7 - MANTENIMIENTO Y MONTAJE ELECTROMECANICO",
+            "docentes_ids": [
+                16
+            ]
+        },
+        {
+            "id": 56,
+            "nombre": "PRG1 - Programación 1",
+            "docentes_ids": [
+                6
+            ]
+        },
+        {
+            "id": 57,
+            "nombre": "PT1-AE - Ajustes y Estructuras",
+            "docentes_ids": [
+                33
+            ]
+        },
+        {
+            "id": 58,
+            "nombre": "PT1-EL - Electrónica",
+            "docentes_ids": [
+                10
+            ]
+        },
+        {
+            "id": 59,
+            "nombre": "PT1-ET - Electricidad",
+            "docentes_ids": [
+                6
+            ]
+        },
+        {
+            "id": 60,
+            "nombre": "PT1-MH - Maquinas y herramientas -  Impresión 3D",
+            "docentes_ids": [
+                18
+            ]
+        },
+        {
+            "id": 61,
+            "nombre": "PT1-MT - Materiales",
+            "docentes_ids": [
+                27
+            ]
+        },
+        {
+            "id": 62,
+            "nombre": "PT2-AE - Ajustes y Estructuras",
+            "docentes_ids": [
+                34
+            ]
+        },
+        {
+            "id": 63,
+            "nombre": "PT2-EL - Electrónica",
+            "docentes_ids": [
+                6
+            ]
+        },
+        {
+            "id": 64,
+            "nombre": "PT2-ET - Electricidad",
+            "docentes_ids": [
+                33
+            ]
+        },
+        {
+            "id": 65,
+            "nombre": "PT2-MH - Maquinas y herramientas",
+            "docentes_ids": [
+                16
+            ]
+        },
+        {
+            "id": 66,
+            "nombre": "PT2-MT - Materiales",
+            "docentes_ids": [
+                27
+            ]
+        },
+        {
+            "id": 67,
+            "nombre": "PT3-AE - Ajustes y Estructuras",
+            "docentes_ids": [
+                35
+            ]
+        },
+        {
+            "id": 68,
+            "nombre": "PT3-EL - Electrónica",
+            "docentes_ids": [
+                22
+            ]
+        },
+        {
+            "id": 69,
+            "nombre": "PT3-ME - Metrologia",
+            "docentes_ids": [
+                21
+            ]
+        },
+        {
+            "id": 70,
+            "nombre": "PT3-MH - Maquinas y herramientas",
+            "docentes_ids": [
+                13
+            ]
+        },
+        {
+            "id": 71,
+            "nombre": "PT3-MT - Materiales",
+            "docentes_ids": [
+                5
+            ]
+        },
+        {
+            "id": 72,
+            "nombre": "PyDE7 - Proyecto y Diseño Electrónico",
+            "docentes_ids": [
+                1,
+                3
+            ]
+        },
+        {
+            "id": 73,
+            "nombre": "PyDEM7 - PROYECTO Y DISEÑO ELECTROMECANICO",
+            "docentes_ids": [
+                23
+            ]
+        },
+        {
+            "id": 74,
+            "nombre": "PyDIE7 - Proyecto y Diseño de Instalaciones eléctricas.",
+            "docentes_ids": [
+                19
+            ]
+        },
+        {
+            "id": 75,
+            "nombre": "RI6 - Robótica Industrial",
+            "docentes_ids": [
+                8,
+                29
+            ]
+        },
+        {
+            "id": 76,
+            "nombre": "RI7- Robótica Industrial",
+            "docentes_ids": [
+                8,
+                36
+            ]
+        },
+        {
+            "id": 77,
+            "nombre": "RyEM5 - Resistencia y Ensayo de Materiales",
+            "docentes_ids": [
+                18,
+                32
+            ]
+        },
+        {
+            "id": 78,
+            "nombre": "SCOM6 - Sistemas de Comunicaciones",
+            "docentes_ids": [
+                2
+            ]
+        },
+        {
+            "id": 79,
+            "nombre": "SCOM7 - Sistemas de Comunicaciones",
+            "docentes_ids": [
+                2
+            ]
+        },
+        {
+            "id": 80,
+            "nombre": "SCTRL7 - Sistemas de Control",
+            "docentes_ids": [
+                37
+            ]
+        },
+        {
+            "id": 81,
+            "nombre": "SHyPA5 - SHyPA",
+            "docentes_ids": [
+                13
+            ]
+        },
+        {
+            "id": 82,
+            "nombre": "SM6 - Sistemas Mecánicos",
+            "docentes_ids": [
+                15,
+                38
+            ]
+        },
+        {
+            "id": 83,
+            "nombre": "SM7 - Sistemas Mecánicos",
+            "docentes_ids": [
+                32
+            ]
+        },
+        {
+            "id": 84,
+            "nombre": "SP6 - Sistemas Productivos",
+            "docentes_ids": [
+                23
+            ]
+        },
+        {
+            "id": 85,
+            "nombre": "ST1 - Sistemas Tecnológicos",
+            "docentes_ids": [
+                21,
+                39
+            ]
+        },
+        {
+            "id": 86,
+            "nombre": "ST2- Sistemas Tecnológicos",
+            "docentes_ids": [
+                21,
+                39
+            ]
+        },
+        {
+            "id": 87,
+            "nombre": "ST3 - Sistemas Tecnológicos",
+            "docentes_ids": [
+                11,
+                21,
+                22
+            ]
+        },
+        {
+            "id": 88,
+            "nombre": "TM4- Tecnología de los Materiales",
+            "docentes_ids": [
+                18,
+                32
+            ]
+        },
+        {
+            "id": 89,
+            "nombre": "TyMT6 - TERMODINÁMICA Y MÁQUINAS TÉRMICAS",
+            "docentes_ids": [
+                38,
+                40
+            ]
+        }
+    ],
+    "docentes": [
+        {
+            "id": 1,
+            "nombre": "Mansilla Matias",
+            "email": "mmansilla@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 2,
+            "nombre": "Tombesi Alejandro",
+            "email": "atombesi@etrr.edu.ar",
+            "coordinador": ""
+        },
+        {
+            "id": 3,
+            "nombre": "Sagripanti Ramiro",
+            "email": "rsagripanti@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 4,
+            "nombre": "Pena Dario",
+            "email": "dpena@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 5,
+            "nombre": "Herber Agustín",
+            "email": "aherber@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 6,
+            "nombre": "Casado Martín",
+            "email": "mcasado@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 7,
+            "nombre": "Priolo Enrique",
+            "email": "epriolo@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 8,
+            "nombre": "Bolzan Laureano",
+            "email": "lbolzan@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 9,
+            "nombre": "Costa Nicolas",
+            "email": "ncosta@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 10,
+            "nombre": "Oliva Pedro",
+            "email": "poliva@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 11,
+            "nombre": "Maciel Alejo",
+            "email": "amaciel@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 12,
+            "nombre": "Duperut Alberto",
+            "email": "adupertu@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 13,
+            "nombre": "Sarrachini Franco",
+            "email": "fsarrachini@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 14,
+            "nombre": "Ojeda German",
+            "email": "gojeda@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 15,
+            "nombre": "Montenegro Fausto",
+            "email": "fmontenegro@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 16,
+            "nombre": "Rosato Bruno",
+            "email": "brosato@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 17,
+            "nombre": "Cornaglia Luis",
+            "email": "lcornaglia@etrr.edu.ar",
+            "coordinador": ""
+        },
+        {
+            "id": 18,
+            "nombre": "Trejo Julieta",
+            "email": "jtrejo@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 19,
+            "nombre": "Sanchez Mario",
+            "email": "msanchez@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 20,
+            "nombre": "Melidore Lucas",
+            "email": "lmelidore@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 21,
+            "nombre": "D´Hipólito Denise",
+            "email": "ddhipolito@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 22,
+            "nombre": "Berjecio Gastón",
+            "email": "gberjecio@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 23,
+            "nombre": "Paterlini Aldo",
+            "email": "apaterlini@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 24,
+            "nombre": "Hernandez Sandra",
+            "email": "shernandez@ettr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 25,
+            "nombre": "PESICH GABRIEL FERNANDO",
+            "email": "gpesich@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 26,
+            "nombre": "Machado Lucas",
+            "email": "lmachado@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 27,
+            "nombre": "Valdez Agustín",
+            "email": "avaldez@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 28,
+            "nombre": "Balarino Leopoldo",
+            "email": "lbalarino@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 29,
+            "nombre": "Ledlheros Agustín",
+            "email": "aledheros@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 31,
+            "nombre": "Albornoz Emanuel",
+            "email": "ealbornoz@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 32,
+            "nombre": "Gallo Ernesto",
+            "email": "egallo@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 33,
+            "nombre": "Etchechoury Francisco",
+            "email": "fetchechoury@etrr.edu.ar",
+            "coordinador": "Isi"
+        },
+        {
+            "id": 34,
+            "nombre": "Ausades Juan Manuel",
+            "email": "jausades@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 35,
+            "nombre": "Villavona Mauricio",
+            "email": "mvillavona@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 36,
+            "nombre": "Gasparini Roberto",
+            "email": "rgasparini@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 37,
+            "nombre": "Pavelek Israel",
+            "email": "ipavelek@etrr.edu.ar",
+            "coordinador": ""
+        },
+        {
+            "id": 38,
+            "nombre": "Herrera Juan Manuel",
+            "email": "jherrera@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 39,
+            "nombre": "Sager Nadia",
+            "email": "nsager@etrr.edu.ar",
+            "coordinador": "Ale"
+        },
+        {
+            "id": 40,
+            "nombre": "Bermudez Gonzalo",
+            "email": "gbermudez@etrr.edu.ar",
+            "coordinador": "Isi"
+        }
+    ],
+    "config": [
+        {
+            "clave": "sharepoint_url",
+            "valor": "https://etrrar-my.sharepoint.com/:x:/g/personal/ipavelek_etrr_edu_ar/IQAiT6ypndWyTZJmKJ1JQVQrASLW1LQ99lU3kU0wHWTzrq0?e=mMuUnM"
+        }
+    ]
+}
