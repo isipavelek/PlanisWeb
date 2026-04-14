@@ -1612,7 +1612,38 @@ window.renderAnaliticasAuditoria = function() {
 
     document.getElementById('analiticas-metrics').innerHTML = metricsHtml;
 
+    // --- ESTADÍSTICAS DE ABP ---
+    let aplicaABP = [];
+    let noAplicaABP = [];
+    let sinDatoABP = [];
+
+    materias.forEach(m => {
+        if (m.Estado === 'No Entregada') return;
+        const abpKey = Object.keys(m).find(k => k.toLowerCase().includes('abp'));
+        let val = abpKey ? String(m[abpKey]).toLowerCase().trim() : null;
+        
+        if (val === 'sí' || val === 'si' || val === 'yes') {
+            aplicaABP.push(m);
+        } else if (val === 'no') {
+            noAplicaABP.push(m);
+        } else {
+            sinDatoABP.push(m);
+        }
+    });
+
     let chartsHtml = `
+        <div style="grid-column: 1 / -1; background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <h4 style="margin:0 0 25px; font-size: 14px; text-transform: uppercase; color: var(--color-primary); letter-spacing:1px;">🎓 Aplicación de Aprendizaje Basado en Proyectos (ABP)</h4>
+            <div style="display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start;">
+                <div style="width: 250px; height: 250px; flex-shrink:0; position:relative;">
+                    <canvas id="abpChart"></canvas>
+                </div>
+                <div id="abp-detail" style="flex:1; min-width:300px; background:#222; padding:20px; border-radius:12px; max-height:250px; overflow-y:auto; border:1px solid #444;">
+                    <p style="color:#aaa; text-align:center; font-style:italic; margin-top:50px;">Hacé clic en un sector del gráfico para ver el detalle de las materias.</p>
+                </div>
+            </div>
+        </div>
+
         <div style="grid-column: 1 / -1; background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             <h4 style="margin:0 0 25px; font-size: 14px; text-transform: uppercase; color: var(--color-primary); letter-spacing:1px;">📊 Desempeño por Ítem Individual</h4>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:25px;">
@@ -1644,6 +1675,64 @@ window.renderAnaliticasAuditoria = function() {
 
     chartsHtml += `</div></div>`;
     document.getElementById('analiticas-charts').innerHTML = chartsHtml;
+
+    // Renderizar gráfico de pie para ABP
+    setTimeout(() => {
+        const ctx = document.getElementById('abpChart');
+        if (ctx && (aplicaABP.length > 0 || noAplicaABP.length > 0 || sinDatoABP.length > 0)) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Aplica ABP', 'No Aplica', 'Sin Respuesta/Otro'],
+                    datasets: [{
+                        data: [aplicaABP.length, noAplicaABP.length, sinDatoABP.length],
+                        backgroundColor: ['#22c55e', '#ef4444', '#facc15'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#ccc'} }
+                    },
+                    onClick: (evt, elements) => {
+                        if (elements.length > 0) {
+                            const segmentIndex = elements[0].index;
+                            window.mostrarDetalleABP(segmentIndex, aplicaABP, noAplicaABP, sinDatoABP);
+                        }
+                    }
+                }
+            });
+        }
+    }, 100);
+};
+
+window.mostrarDetalleABP = function(index, aplica, noAplica, sinDato) {
+    const detailDiv = document.getElementById('abp-detail');
+    if (!detailDiv) return;
+
+    let title = '';
+    let lista = [];
+    if (index === 0) { title = 'Materias que Aplican ABP'; lista = aplica; }
+    else if (index === 1) { title = 'Materias que NO Aplican ABP'; lista = noAplica; }
+    else { title = 'Sin Respuesta o en Revisión'; lista = sinDato; }
+
+    if (lista.length === 0) {
+        detailDiv.innerHTML = \`<h5 style="color:var(--color-primary); margin-top:0;">\${title} (0)</h5><p style="color:#aaa; font-size:13px;">No hay materias en esta categoría.</p>\`;
+        return;
+    }
+
+    let listHtml = lista.map(m => \`<li style="margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid #333;">
+        <b style="color:#eee;">\${m.Materia || m.Materia_Base}</b><br>
+        <span style="color:#888; font-size:12px;">Docente: \${m.Docente} | Coord: \${m.Coordinador || '-'}</span>
+        </li>\`).join('');
+
+    detailDiv.innerHTML = \`
+        <h5 style="color:var(--color-primary); margin-top:0; border-bottom:1px solid var(--color-primary); padding-bottom:8px; position:sticky; top:0; background:#222;">\${title} (\${lista.length})</h5>
+        <ul style="list-style:none; padding:0; margin:0; font-size:13px;">\${listHtml}</ul>
+    \`;
 };
 
 /**
