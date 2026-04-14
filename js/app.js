@@ -1726,19 +1726,19 @@ window.mostrarDetalleABP = function(index, aplica, noAplica, sinDato) {
     else { title = 'Sin Respuesta o en Revisión'; lista = sinDato; }
 
     if (lista.length === 0) {
-        detailDiv.innerHTML = \`<h5 style="color:var(--color-primary); margin-top:0;">\${title} (0)</h5><p style="color:#aaa; font-size:13px;">No hay materias en esta categoría.</p>\`;
+        detailDiv.innerHTML = `<h5 style="color:var(--color-primary); margin-top:0;">${title} (0)</h5><p style="color:#aaa; font-size:13px;">No hay materias en esta categoría.</p>`;
         return;
     }
 
-    let listHtml = lista.map(m => \`<li style="margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid #333;">
-        <b style="color:#eee;">\${m.Materia || m.Materia_Base}</b><br>
-        <span style="color:#888; font-size:12px;">Docente: \${m.Docente} | Coord: \${m.Coordinador || '-'}</span>
-        </li>\`).join('');
+    let listHtml = lista.map(m => `<li style="margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid #333;">
+        <b style="color:#eee;">${m.Materia || m.Materia_Base}</b><br>
+        <span style="color:#888; font-size:12px;">Docente: ${m.Docente} | Coord: ${m.Coordinador || '-'}</span>
+        </li>`).join('');
 
-    detailDiv.innerHTML = \`
-        <h5 style="color:var(--color-primary); margin-top:0; border-bottom:1px solid var(--color-primary); padding-bottom:8px; position:sticky; top:0; background:#222;">\${title} (\${lista.length})</h5>
-        <ul style="list-style:none; padding:0; margin:0; font-size:13px;">\${listHtml}</ul>
-    \`;
+    detailDiv.innerHTML = `
+        <h5 style="color:var(--color-primary); margin-top:0; border-bottom:1px solid var(--color-primary); padding-bottom:8px; position:sticky; top:0; background:#222;">${title} (${lista.length})</h5>
+        <ul style="list-style:none; padding:0; margin:0; font-size:13px;">${listHtml}</ul>
+    `;
 };
 
 /**
