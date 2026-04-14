@@ -1637,15 +1637,45 @@ window.renderAnaliticasAuditoria = function() {
         }
     });
 
+    // Ranking de Docentes ABP
+    const docentesABPCount = {};
+    aplicaABP.forEach(m => {
+        const docenteStr = m.Docente || 'Desconocido';
+        const docentes = docenteStr.split(' - ').map(d => d.trim()).filter(d => d && d.toUpperCase() !== 'DESCONOCIDO');
+        docentes.forEach(d => {
+            docentesABPCount[d] = (docentesABPCount[d] || 0) + 1;
+        });
+    });
+
+    const rankingHtml = Object.entries(docentesABPCount)
+        .sort((a, b) => b[1] - a[1]) // Mayor a menor
+        .map((entry, index) => {
+            let medalla = '';
+            if (index === 0) medalla = '🥇 ';
+            else if (index === 1) medalla = '🥈 ';
+            else if (index === 2) medalla = '🥉 ';
+            else medalla = `<span style="display:inline-block; width:20px; text-align:center; color:#777;">${index + 1}.</span> `;
+            return `<li style="margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
+                <span>${medalla}<b style="color:#eee;">${entry[0]}</b></span>
+                <span style="background:var(--color-primary); color:#fff; padding:2px 8px; border-radius:12px; font-weight:bold; font-size:11px;">${entry[1]} mat.</span>
+            </li>`;
+        }).join('') || '<li style="color:#aaa; font-style:italic; text-align:center;">No hay datos de docentes aún.</li>';
+
     let chartsHtml = `
         <div style="grid-column: 1 / -1; background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             <h4 style="margin:0 0 25px; font-size: 14px; text-transform: uppercase; color: var(--color-primary); letter-spacing:1px;">🎓 Aplicación de Aprendizaje Basado en Proyectos (ABP)</h4>
-            <div style="display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start;">
+            <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:flex-start;">
                 <div style="width: 250px; height: 250px; flex-shrink:0; position:relative;">
                     <canvas id="abpChart"></canvas>
                 </div>
-                <div id="abp-detail" style="flex:1; min-width:300px; background:#222; padding:20px; border-radius:12px; max-height:250px; overflow-y:auto; border:1px solid #444;">
+                <div id="abp-detail" style="flex:1; min-width:250px; background:#222; padding:20px; border-radius:12px; max-height:250px; overflow-y:auto; border:1px solid #444;">
                     <p style="color:#aaa; text-align:center; font-style:italic; margin-top:50px;">Hacé clic en un sector del gráfico para ver el detalle de las materias.</p>
+                </div>
+                <div style="flex:1; min-width:250px; background:#222; padding:20px; border-radius:12px; max-height:250px; overflow-y:auto; border:1px solid #444;">
+                    <h5 style="color:var(--color-primary); margin-top:0; border-bottom:1px solid var(--color-primary); padding-bottom:8px; position:sticky; top:0; background:#222; z-index:1;">🏆 Top Docentes ABP</h5>
+                    <ul style="list-style:none; padding:0; margin:0; font-size:13px;">
+                        ${rankingHtml}
+                    </ul>
                 </div>
             </div>
         </div>
