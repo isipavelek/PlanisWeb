@@ -175,6 +175,13 @@ const userSelect = document.getElementById('user-select');
 const userPassword = document.getElementById('user-password');
 const loginError = document.getElementById('login-error');
 
+// Permitir iniciar sesión presionando Enter en el campo de contraseña
+userPassword.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        btnLogin.click();
+    }
+});
+
 // Iniciar Sesión con Firebase Auth
 btnLogin.addEventListener('click', async () => {
     // Detectar si se está abriendo como archivo local (CORS blocks modules)
@@ -222,7 +229,6 @@ onAuthStateChanged(auth, (user) => {
         appScreen.classList.add('active');
         initViewTabs();
         initApp();
-        initVisorSearch();
     } else {
         // Usuario no logueado
         appScreen.classList.remove('active');
