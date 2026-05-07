@@ -36,8 +36,8 @@ const state = {
 
 // --- DEFINICIÓN DE RÚBRICAS ---
 const RUBRICAS = {
-    academica: {
-        titulo: "Académica e Intención",
+    propuesta: {
+        titulo: "Propuesta Académica",
         items: [
             { 
                 id: 'hilos', 
@@ -68,13 +68,13 @@ const RUBRICAS = {
         items: [
             { 
                 id: 'abp', 
-                label: 'Diseño del ABP', 
+                label: 'Diseño del ABP (Solo si aplica)', 
                 desc: '¿El proyecto tiene sentido real?',
                 niveles: {
-                    4: "La pregunta guía es auténtica, vinculada a la industria o comunidad, con criterios de evaluación específicos para el proyecto.",
+                    4: "La pregunta disparadora es auténtica, vinculada a la industria o comunidad, con criterios de evaluación específicos para el proyecto.",
                     3: "Propone un problema o pregunta que articula los contenidos de la unidad.",
-                    2: "El ABP parece un trabajo práctico tradicional con otro nombre; falta el componente de indagación.",
-                    1: "No aplica ABP o no define criterios de evaluación para el mismo."
+                    2: "La propuesta no respeta la metodología de ABP o carece de alguna de sus partes.",
+                    1: "El ABP parece un trabajo práctico tradicional con otro nombre; falta el componente de indagación."
                 }
             },
             { 
@@ -82,7 +82,7 @@ const RUBRICAS = {
                 label: 'Evidencia Integradora', 
                 desc: '¿Cómo demuestra el alumno lo aprendido?',
                 niveles: {
-                    4: "La evidencia final es un producto o desempeño profesional que integra múltiples saberes y áreas.",
+                    4: "Propone evidencias finales que muestran desempeño profesional que integra múltiples saberes y áreas.",
                     3: "Define una entrega clara que permite verificar el logro de los objetivos principales.",
                     2: "La evidencia es solo un examen escrito o un informe sin aplicación práctica.",
                     1: "No se define una evidencia integradora clara."
@@ -109,7 +109,7 @@ const RUBRICAS = {
                 label: 'Cultura de Seguridad', 
                 desc: '¿La seguridad es parte de la enseñanza?',
                 niveles: {
-                    4: "La seguridad está integrada en cada actividad pedagógica; los alumnos proponen mejoras preventivas.",
+                    4: "La seguridad está integrada en cada actividad pedagógica.",
                     3: "Se mencionan y respetan las normas de seguridad específicas del área.",
                     2: "Las normas de seguridad son genéricas y no se aplican al contexto real de la materia.",
                     1: "No se mencionan normas de seguridad."
@@ -118,28 +118,39 @@ const RUBRICAS = {
             { 
                 id: '5s', 
                 label: 'Implementación de 5S', 
-                desc: '¿Se educa en el orden profesional?',
+                desc: '¿Se contempla el trabajo de 5S?',
                 niveles: {
-                    4: "El aula/taller refleja una cultura de orden y limpieza profesional constante bajo metodología 5S.",
-                    3: "Se aplican criterios de orden y limpieza al finalizar las clases.",
-                    2: "El orden y la limpieza son ocasionales o reactivos ante pedidos del docente.",
-                    1: "No hay evidencia de organización o limpieza sistemática."
+                    4: "Se planifican implementación y contenidos relacionados con 5S de forma sistemática e integrada.",
+                    3: "Se planifica momentos de orden al final de la clase.",
+                    2: "Se planifican momentos aleatorios de implementacion de 5S.",
+                    1: "No hay evidencia de planificación de 5S."
                 }
             }
         ]
     },
-    recursos: {
-        titulo: "Recursos y Tiempos",
+    recursos_gestion: {
+        titulo: "Recursos didácticos y gestión del Tiempos",
         items: [
             { 
                 id: 'cronograma', 
                 label: 'Planificación Temporal', 
                 desc: '¿El cronograma es viable?',
                 niveles: {
-                    4: "El cronograma es detallado, realista y contempla contingencias y rotaciones.",
-                    3: "Existe una planificación temporal básica por bimestres/unidades.",
-                    2: "El cronograma es excesivamente ambicioso o falta detalle en las fechas clave.",
+                    4: "El cronograma es detallado, realista.",
+                    3: "Existe una planificación temporal básica.",
+                    2: "El cronograma no es realista o poco aplicable.",
                     1: "No hay planificación temporal definida."
+                }
+            },
+            { 
+                id: 'gestion', 
+                label: 'Gestión de la planificación', 
+                desc: '¿Entrega en tiempo y forma?',
+                niveles: {
+                    4: "Entregó antes de la fecha prevista",
+                    3: "Entregó a tiempo.",
+                    2: "Entregó algunos días despues luego del reclamo.",
+                    1: "Entregó varios días luego de varios reclamos."
                 }
             }
         ]
@@ -1392,11 +1403,11 @@ window.generarResumenDocente = function (materiaId) {
     const getLevel = (s) => ["-", "Insuficiente", "En Proceso", "Logrado", "Destacado"][s] || "-";
 
     const sections = [
-        { label: "A. GESTIÓN", items: ["Propósitos, Objetivos, Unidades y Cronograma"], score: getScore('hilos') || getScore('cronograma') },
-        { label: "B. ACADÉMICA", items: ["Hilos Conductores y Competencias"], score: getScore('competencias') },
-        { label: "C. PEDAGÓGICA", items: ["Hoja de Ruta y Metodologías"], score: getScore('abp') || getScore('evidencia') },
-        { label: "D. EVALUACIÓN", items: ["Criterios, Promoción y Recup."], score: getScore('criterios') },
-        { label: "E. ENTORNO", items: ["Seguridad, EPP y 5S"], score: getScore('cultura') || getScore('5s') }
+        { label: "1. PROPUESTA", items: ["Hilos Conductores y Metas"], score: getScore('hilos') },
+        { label: "2. ACADÉMICA", items: ["Competencias y Gestión"], score: getScore('competencias') || getScore('gestion') },
+        { label: "3. METODOLOGÍA", items: ["Diseño ABP y Evidencia"], score: getScore('abp') || getScore('evidencia') },
+        { label: "4. EVALUACIÓN", items: ["Criterios y Promoción"], score: getScore('criterios') },
+        { label: "5. ENTORNO", items: ["Seguridad y 5S"], score: getScore('cultura') || getScore('5s') }
     ];
 
     let html = `
@@ -1454,11 +1465,11 @@ window.generarResumenDocente = function (materiaId) {
         <div class="summary-legend" style="margin-top:25px; padding-top:15px; border-top:1px dashed #444;">
             <h5 style="color:var(--color-primary); margin:0 0 10px; font-size:12px; text-transform:uppercase; letter-spacing:1px;">🔍 ¿Cómo se compone este resumen?</h5>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:11px; color:#999;">
-                <div><b>A. GESTIÓN:</b> Hilos, Metas y Cronograma.</div>
-                <div><b>B. ACADÉMICA:</b> Integración de Competencias.</div>
-                <div><b>C. PEDAGÓGICA:</b> Diseño del ABP y Evidencia.</div>
-                <div><b>D. EVALUACIÓN:</b> Criterios y Promoción.</div>
-                <div style="grid-column: span 2;"><b>E. ENTORNO:</b> Cultura de Seguridad e Implementación de 5S.</div>
+                <div><b>1. PROPUESTA:</b> Hilos Conductores y Metas.</div>
+                <div><b>2. ACADÉMICA:</b> Integración de Competencias y Gestión.</div>
+                <div><b>3. METODOLOGÍA:</b> Diseño del ABP y Evidencia Integradora.</div>
+                <div><b>4. EVALUACIÓN:</b> Criterios y Promoción.</div>
+                <div style="grid-column: span 2;"><b>5. ENTORNO:</b> Cultura de Seguridad e Implementación de 5S.</div>
             </div>
         </div>
     </div>`;
@@ -1478,7 +1489,7 @@ function generarRadarSVG(sections) {
     const size = 180;
     const center = size / 2;
     const radius = 60;
-    const labels = ["GEST", "ACAD", "PED", "EVAL", "ENT"];
+    const labels = ["PROP", "ACAD", "METO", "EVAL", "ENT"];
     const points = [];
     
     // Calcular coordenadas de cada eje y dato
