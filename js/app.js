@@ -885,7 +885,7 @@ function renderDetalleVisor(row) {
             <div class="info-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #444; padding-bottom:10px;">
                     <h3 style="margin:0; color:var(--color-primary);">Detalles de Planificación</h3>
-                    <div style="display:flex; gap:10px;">
+                    <div class="no-print" style="display:flex; gap:10px;">
                         <button class="btn btn-primary" onclick="window.scrollToEval()" style="background:var(--color-primary); border:none; color: #fff; font-weight:700; font-size:12px; padding: 6px 12px; display:flex; align-items:center; gap:5px;">
                             📋 EVALUAR
                         </button>

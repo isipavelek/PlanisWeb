@@ -182,8 +182,22 @@
 
                 <!-- Vista Visor -->
                 <div id="view-visor" class="view-panel hidden visor-layout">
-                    <div class="visor-header">
+                    <div class="visor-header" style="display: flex; gap: 10px; align-items: center;">
                         <button id="btn-toggle-visor-list" class="btn btn-dark btn-sm">⬅ Ocultar Lista</button>
+                        <button id="btn-export-pdf" class="btn btn-primary btn-sm" onclick="window.print()" style="margin-left: auto;">🖨️ Exportar a PDF</button>
+                    </div>
+                    <!-- Encabezado exclusivo para impresión a PDF -->
+                    <div class="print-header" style="display: none;">
+                        <div style="display: flex; gap: 20px; align-items: center;">
+                            <img src="logo.png" alt="Logo Escuela">
+                            <div>
+                                <h2>Escuela Técnica Roberto Rocca</h2>
+                                <p>Planificación Académica 2026</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <h3 style="margin: 0; color: #666; font-size: 18px;">Nodo Tecnológico</h3>
+                        </div>
                     </div>
                     <div class="visor-body">
                         <div id="visor-sidebar" class="visor-sidebar">
@@ -304,6 +318,6 @@
 
     <!-- Firebase App (via CDN) -->
     <script type="module" src="js/firebase-config.js"></script>
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=2"></script>
 </body>
 </html>
