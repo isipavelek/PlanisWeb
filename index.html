@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanisWeb - Control de Planificaciones</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Estilos de la aplicación -->
+    <link rel="stylesheet" href="css/styles.css?v=4">
     <!-- Chart.js para los contadores (opcional si usamos tarjetas estáticas, pero agreguémoslo por si acaso) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- SheetJS (xlsx) -->
@@ -110,7 +111,11 @@
                 <button class="view-tab" data-view="docentes">Docentes</button>
                 <button class="view-tab" data-view="visor">Visor</button>
                 <button class="view-tab" data-view="analiticas">Analíticas</button>
+                <button id="btn-export-all" class="btn btn-primary btn-sm hidden" style="margin-left:auto; width: auto; background: var(--color-green);">🖨️ Exportar Todas (Filtro)</button>
             </div>
+
+            <!-- Contenedor para impresión masiva -->
+            <div id="print-batch-container"></div>
 
             <!-- Vistas -->
             <div class="views-container">
@@ -318,6 +323,6 @@
 
     <!-- Firebase App (via CDN) -->
     <script type="module" src="js/firebase-config.js"></script>
-    <script type="module" src="js/app.js?v=2"></script>
+    <script type="module" src="js/app.js?v=3"></script>
 </body>
 </html>

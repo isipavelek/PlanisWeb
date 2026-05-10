@@ -542,8 +542,10 @@ document.querySelectorAll('.view-tab').forEach(tab => {
         document.getElementById(`view-${state.vistaActual}`).classList.add('active');
 
         if (state.vistaActual === 'visor') {
+            document.getElementById('btn-export-all').classList.remove('hidden');
             fetchAllEvaluaciones().then(() => renderizarVistas());
         } else {
+            document.getElementById('btn-export-all').classList.add('hidden');
             renderizarVistas();
         }
     });
@@ -862,7 +864,7 @@ function renderVisorLista() {
     });
 }
 
-function renderDetalleVisor(row) {
+function generateHTMLForMateria(row) {
     let col = "#fff";
     if (row.Estado === ESTADO_LISTA) col = "var(--color-green-light)";
     else if (row.Estado === ESTADO_NO_ENTREGADA) col = "var(--color-red)";
@@ -963,8 +965,11 @@ function renderDetalleVisor(row) {
         }
         html += `</div>`;
     }
+    return html;
+}
 
-    visorDetail.innerHTML = html;
+function renderDetalleVisor(row) {
+    visorDetail.innerHTML = generateHTMLForMateria(row);
 
     // Actualizar sidebar de evaluación (pero no abrirlo solo)
     fetchEvaluacionesMateria(row.id).then(() => {
@@ -987,6 +992,47 @@ document.getElementById('btn-toggle-visor-list').addEventListener('click', () =>
     document.getElementById('visor-sidebar').classList.toggle('collapsed');
     const isCol = document.getElementById('visor-sidebar').classList.contains('collapsed');
     document.getElementById('btn-toggle-visor-list').textContent = isCol ? '➡ Mostrar Lista' : '⬅ Ocultar Lista';
+});
+
+// Impresión Masiva
+document.getElementById('btn-export-all').addEventListener('click', () => {
+    if (!state.dfMostrado || state.dfMostrado.length === 0) {
+        return alert("No hay planificaciones filtradas para exportar.");
+    }
+    
+    // Preparar el HTML masivo
+    const container = document.getElementById('print-batch-container');
+    const headerElement = document.querySelector('.print-header');
+    const headerHtml = headerElement ? headerElement.outerHTML.replace('style="display: none;"', 'style="display: flex; justify-content: space-between; align-items: center; width: 100%;"') : '';
+    
+    let allHtml = '';
+    state.dfMostrado.forEach((row, index) => {
+        allHtml += `
+            <div style="page-break-after: always; padding-top: 20px;">
+                ${headerHtml}
+                ${generateHTMLForMateria(row)}
+            </div>
+        `;
+    });
+    
+    container.innerHTML = allHtml;
+    
+    // Activar clase de impresión masiva
+    document.body.classList.add('batch-print');
+    
+    // Forzar reflow para que calcule grids y alturas antes de abrir el diálogo de impresión
+    container.offsetHeight;
+    
+    // Llamar impresión (el timeout extra asegura el renderizado completo)
+    setTimeout(() => {
+        window.print();
+        
+        // Limpiar después de imprimir
+        setTimeout(() => {
+            document.body.classList.remove('batch-print');
+            container.innerHTML = '';
+        }, 1000);
+    }, 500);
 });
 
 // --- FUNCIONES DE RESUMEN IA ---

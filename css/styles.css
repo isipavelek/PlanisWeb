@@ -287,6 +287,17 @@ body {
     overflow: hidden;
 }
 
+#print-batch-container {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    background: #fff;
+    color: #000;
+}
+
 /* Counters */
 .counters-container {
     display: flex;
@@ -913,6 +924,17 @@ body {
     /* Evitar que títulos queden solos al final de la página */
     h2, h3, h4 {
         page-break-after: avoid;
+    }
+
+    /* Impresión Masiva (Batch Print) */
+    body.batch-print #view-visor, body.batch-print #visor-eval-sidebar, body.batch-print .view-selector, body.batch-print #sidebar {
+        display: none !important;
+    }
+    body.batch-print #print-batch-container {
+        display: block !important;
+        position: static !important;
+        left: 0 !important;
+        opacity: 1 !important;
     }
 
     /* IMPORTANTE: Respetar elementos ocultos para que no se imprima el login ni otras vistas */
